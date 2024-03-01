@@ -1,0 +1,13 @@
+h1{
+    text-align: center;
+}
+.forms{
+    display: flex;
+}
+
+.form__create{
+    width: 50%;
+}
+.form__task{
+    width: 50%;
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+{% load static%}
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <title>My To Do List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+
+    <main class="container">
+        <div class="container__title">
+            <h1>My  To Do List</h1>
+        </div>
+        <div class="forms">
+
+            <div class="form__create">
+                {% if update %}
+                <form class="w-75" method="post" action={% url "update" %}>
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="subject" class="form-label">Actualizar...</label>
+                        <input type="text" value="{{ update.subject }}" class="form-control" name="subject" id="subject" aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Por hacer</label>
+                        <textarea type="text" name="description" class="form-control" id="description">{{ update.description }}</textarea>
+                    </div>
+                    <input type="hidden" name="id" value="{{ update.id }}" />
+                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                </form>
+                {% else %}
+                <form class="w-75" method="post" action={% url "insert" %}>
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="subject" class="form-label">Por hacer</label>
+                        <input type="text" class="form-control" name="subject" id="subject" aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Descripcion</label>
+                        <input type="text" name="description" class="form-control" id="description"></input>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">Añadir</button>
+                </form>
+                {% endif %}
+            </div>
+
+            <div class="form__task">
+            {% for data in db_data %}
+               <div class="row">
+                <div class="card w-75 col m-2">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ data.subject }}</h5>
+                        <p class="card-text">{{ data.description }}</p>
+                        <a href={% url "update_form" data.id %} class="btn btn-primary">Actualizar</a>
+                        <a href={% url "delete" data.id %} class="btn btn-danger">Eliminar</a>
+                    </div>
+                </div>
+                </div>
+            {% endfor %}
+            </div>
+
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
+</body>
+</html>
