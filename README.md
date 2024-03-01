@@ -10,7 +10,8 @@ Para evitar conflictos de dependencias, es recomendable utilizar un entorno virt
 
 2. Ejecuta el siguiente comando para crear un entorno virtual:
 
-   python -m venv venv
+python -m venv venv
+
 Activa el entorno virtual:
 
 En Windows:
